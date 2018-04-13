@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<preserve resultType="2" virtualPath="/Views/TenderManage/BidHistory.cshtml" hash="5c1b350b" filehash="2d45125b5dca" flags="110000" assembly="App_Web_pnadxkbx" type="ASP._Page_Views_TenderManage_BidHistory_cshtml">
-    <filedeps>
-        <filedep name="/Views/TenderManage/BidHistory.cshtml" />
-    </filedeps>
-</preserve>

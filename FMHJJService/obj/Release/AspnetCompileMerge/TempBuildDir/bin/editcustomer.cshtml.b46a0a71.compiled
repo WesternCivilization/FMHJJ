@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<preserve resultType="2" virtualPath="/Views/UserManage/EditCustomer.cshtml" hash="5c1b350b" filehash="3d53c7c9ac05" flags="110000" assembly="App_Web_xflx3ujs" type="ASP._Page_Views_UserManage_EditCustomer_cshtml">
-    <filedeps>
-        <filedep name="/Views/UserManage/EditCustomer.cshtml" />
-    </filedeps>
-</preserve>

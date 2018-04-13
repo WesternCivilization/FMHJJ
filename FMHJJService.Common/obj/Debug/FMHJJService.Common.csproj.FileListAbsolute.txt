@@ -1,9 +1,0 @@
-E:\FMHJJ\FMHJJService.Common\bin\Debug\FMHJJService.Common.dll
-E:\FMHJJ\FMHJJService.Common\bin\Debug\FMHJJService.Common.pdb
-E:\FMHJJ\FMHJJService.Common\bin\Debug\Fleck.dll
-E:\FMHJJ\FMHJJService.Common\bin\Debug\Newtonsoft.Json.dll
-E:\FMHJJ\FMHJJService.Common\bin\Debug\ThoughtWorks.QRCode.dll
-E:\FMHJJ\FMHJJService.Common\bin\Debug\Newtonsoft.Json.xml
-E:\FMHJJ\FMHJJService.Common\obj\Debug\FMHJJService.Common.dll
-E:\FMHJJ\FMHJJService.Common\obj\Debug\FMHJJService.Common.pdb
-E:\FMHJJ\FMHJJService.Common\obj\Debug\FMHJJService.Common.csprojResolveAssemblyReference.cache

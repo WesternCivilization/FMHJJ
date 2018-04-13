@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<preserve resultType="2" virtualPath="/Views/TenderManage/BidVerify.cshtml" hash="5c1b350b" filehash="ffffc1559c2fcfb0" flags="110000" assembly="App_Web_pnadxkbx" type="ASP._Page_Views_TenderManage_BidVerify_cshtml">
-    <filedeps>
-        <filedep name="/Views/TenderManage/BidVerify.cshtml" />
-    </filedeps>
-</preserve>

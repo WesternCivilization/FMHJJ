@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<preserve resultType="2" virtualPath="/Views/NoticeManage/ViewNotice.cshtml" hash="5c1b350b" filehash="fffff621cb303f00" flags="110000" assembly="App_Web_syjw5dfr" type="ASP._Page_Views_NoticeManage_ViewNotice_cshtml">
-    <filedeps>
-        <filedep name="/Views/NoticeManage/ViewNotice.cshtml" />
-    </filedeps>
-</preserve>
