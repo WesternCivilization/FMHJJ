@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMHJJService.BLL", "FMHJJService.BLL\FMHJJService.BLL.csproj", "{BCBC3EA2-3C42-4D5F-842A-45E614BBADCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMHJJService.DAL", "FMHJJService.DAL\FMHJJService.DAL.csproj", "{0FA3E9CF-9FD2-4D99-8EFA-C44ACFDA160D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMHJJService.Model", "FMHJJService.Model\FMHJJService.Model.csproj", "{1E38EC5A-0A89-4D9E-9CDF-6F79C580B6A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMHJJService.Common", "FMHJJService.Common\FMHJJService.Common.csproj", "{ADCE73D3-04FF-4D98-846F-C8026A3B6396}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMHJJService", "FMHJJService\FMHJJService.csproj", "{7DF42B1F-1E99-44BF-90D6-F29B333EF123}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMHJJService.Business", "FMHJJService.Business\FMHJJService.Business.csproj", "{391EB2F5-B166-4439-B0BD-91F8E3377271}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMHJJService.CacheService", "FMHJJService.CacheService\FMHJJService.CacheService.csproj", "{52F0EB44-359E-47C9-8A33-C459D43DA545}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BCBC3EA2-3C42-4D5F-842A-45E614BBADCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCBC3EA2-3C42-4D5F-842A-45E614BBADCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCBC3EA2-3C42-4D5F-842A-45E614BBADCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCBC3EA2-3C42-4D5F-842A-45E614BBADCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FA3E9CF-9FD2-4D99-8EFA-C44ACFDA160D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FA3E9CF-9FD2-4D99-8EFA-C44ACFDA160D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FA3E9CF-9FD2-4D99-8EFA-C44ACFDA160D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FA3E9CF-9FD2-4D99-8EFA-C44ACFDA160D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E38EC5A-0A89-4D9E-9CDF-6F79C580B6A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E38EC5A-0A89-4D9E-9CDF-6F79C580B6A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E38EC5A-0A89-4D9E-9CDF-6F79C580B6A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E38EC5A-0A89-4D9E-9CDF-6F79C580B6A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADCE73D3-04FF-4D98-846F-C8026A3B6396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADCE73D3-04FF-4D98-846F-C8026A3B6396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADCE73D3-04FF-4D98-846F-C8026A3B6396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADCE73D3-04FF-4D98-846F-C8026A3B6396}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DF42B1F-1E99-44BF-90D6-F29B333EF123}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DF42B1F-1E99-44BF-90D6-F29B333EF123}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DF42B1F-1E99-44BF-90D6-F29B333EF123}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DF42B1F-1E99-44BF-90D6-F29B333EF123}.Release|Any CPU.Build.0 = Release|Any CPU
+		{391EB2F5-B166-4439-B0BD-91F8E3377271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{391EB2F5-B166-4439-B0BD-91F8E3377271}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{391EB2F5-B166-4439-B0BD-91F8E3377271}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{391EB2F5-B166-4439-B0BD-91F8E3377271}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F0EB44-359E-47C9-8A33-C459D43DA545}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F0EB44-359E-47C9-8A33-C459D43DA545}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F0EB44-359E-47C9-8A33-C459D43DA545}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F0EB44-359E-47C9-8A33-C459D43DA545}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
