@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Chat";
+}
+
+<h2>Chat</h2>
+
+<div class="container">
+    <input type="text" id="message" />
+    <input type="button" id="sendmessage" value="Send" />
+    <input type="hidden" id="displayname" />
+    <ul id="discussion"></ul>
+
+    <p>
+        <span>房间号：</span>
+        <input type="text" id="groupId" />
+        <span>用户名：</span>
+        <input type="text" id="userName" />
+        <button id="joinRoom">加入聊天室</button>
+    </p>
+    <p>
+        <span>消息：</span>
+        <input type="text" id="groupmessage" />
+        <button id="send">发送</button>
+    </p>
+    <div>
+        <ul id="contentMsg"></ul>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        $(function () {
+            var chat = $.connection.chatHub;
+            chat.client.addNewMessageToPage = function (name, message) {
+                $('#discussion').append('<li><strong>' + htmlEncode(name) + '</strong>:' + htmlEncode(message) + '</li>');
+            };
+            $('#displayname').val(prompt('Enter your name:', ''));
+            $('#message').focus();
+            $.connection.hub.start().done(function () {
+                $('#sendmessage').click(function () {
+                    chat.server.send($('#displayname').val(), $('#message').val());
+                    $('#message').val('').focus();
+                });
+            });
+
+            chat.client.addSomeMessage = function (groupId, detail, userName) {
+                $('#contentMsg').append("<li>" + userName + "：" + detail + "</li>");
+            };
+
+            chat.client.addUserIn = function (groupId, userName) {
+                $('contentMsg').append("<li>" + userName + "进入该聊天室！</li>");
+            };
+
+            $.connection.hub.logging = true; //启动signalr状态功能
+
+            $('#joinRoom').click(function () {
+                var groupId = $('#groupId').val();
+                var userName = $('#userName').val();
+                chat.server.addToRoom(groupId, userName);
+            });
+
+            $('#send').click(function () {
+                var detail = $('#groupmessage').val();
+                var groupId = $('#groupId').val();
+                var userName = $('#userName').val();
+                chat.server.send(groupId, detail, userName);
+            });
+        });
+
+        function htmlEncode(value)
+        {
+            var encodedValue = $('<div/>').text(value).html();
+            return encodedValue;
+        }
+    </script>
+}

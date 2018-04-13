@@ -1,0 +1,170 @@
+@model IEnumerable<FMHJJService.Model.CustomModel.FMHJJ.ProductInfoModel>
+
+@{
+    ViewBag.Title = "产品类别";
+    var rowno = 0;
+}
+
+@section Styles
+{
+    <style>
+        /*去除input边框*/
+        /*input {
+            border: none;
+            outline: medium;
+        }*/ 
+
+        DIV.table {
+            display: table;
+            border-collapse: collapse;
+            width:99%;
+        }
+
+        DIV.thead {
+            display: table-header-group;
+        }
+
+        DIV.tbody {
+            display: table-row-group;
+        }
+
+        DIV.tfoot {
+            display: table-footer-group;
+        }
+
+        FORM.tr, DIV.tr {
+            display: table-row;            
+        }
+
+        SPAN.td, SPAN.th {
+            display: table-cell;            
+        }
+        SPAN.td {
+            border:solid 1px #000;
+            padding: 1px;
+        }
+        SPAN.th{
+            font-weight: 800;
+            font-size: 13px;
+        }
+        
+    </style>
+}
+
+<div>
+    <div id="productInfoTable" class="table" style="text-align:center;">
+        <div class="thead">
+            <div class="tr">
+                <span class="th">
+                    序号
+                </span>
+                <span class="th">
+                    产品名称
+                </span>
+                <span class="th">
+                    客户上限（%）
+                </span>
+                <span class="th">
+                    客户下限（%）
+                </span>
+                <span class="th">
+                    开始排名
+                </span>
+                <span class="th">
+                    结束排名
+                </span>
+                <span class="th">
+                    操作
+                </span>
+            </div>
+        </div>
+        <div class="tbody">
+            @foreach (var item in Model)
+            {
+                rowno++;
+                <div class="tr">
+                    <span class="td">@rowno</span>
+                    <span class="td">
+                        @Html.EditorFor(modelItem => item.ProductName, new { htmlAttributes = new { @style = "width:100%;" } })
+                    </span>
+                    <span class="td">&nbsp;</span>
+                    <span class="td">&nbsp;</span>
+                    <span class="td">&nbsp;</span>
+                    <span class="td">&nbsp;</span>
+                    <span class="td">
+                        @Html.ActionLink("更新产品", "UpdateProduct", new { id = item.ID }, new { @onclick = "layerConfirm('确认要更新产品信息吗？', this); return false;" }) |
+                        @Html.ActionLink("更新等级", null, null, new { @onclick = "$(this).parent().parent().next().submit(); return false;" }) |
+                        @Html.ActionLink("删除", "DeleteProduct", new { id = item.ID }, new { @onclick = "layerConfirm('确认要删除产品信息吗？', this); return false;" })
+                    </span>
+                </div> 
+                foreach (var itemdetail in item.ProductInfoDetails)
+                {
+                    <form class="tr" action="@Url.Action("UpdateLevel", "ProductInfoManage")">
+                        <span class="td">
+                            @Html.HiddenFor(modelItem => itemdetail.ProductType)
+                            @Html.HiddenFor(modelItem => itemdetail.ID)
+                        </span>
+                        <span class="td">
+                            @Html.HiddenFor(modelItem => itemdetail.UserLvl)
+                            @(FMHJJService.Business.FMHJJ.DictSystemBusiness.GetDictKey("客户等级", itemdetail.UserLvl.ToString()))
+                        </span>
+                        <span class="td">
+                            @Html.EditorFor(modelItem => itemdetail.Upper, new { htmlAttributes = new { @style = "width:100%;" } })
+                        </span>
+                        <span class="td">
+                            @Html.EditorFor(modelItem => itemdetail.Lower, new { htmlAttributes = new { @style = "width:100%;" } })
+                        </span>
+                        <span class="td">
+                            @Html.EditorFor(modelItem => itemdetail.FirstRank, new { htmlAttributes = new { @style = "width:100%;" } })
+                        </span>
+                        <span class="td">
+                            @Html.EditorFor(modelItem => itemdetail.LastRank, new { htmlAttributes = new { @style = "width:100%;" } })
+                        </span>
+                        <span class="td">&nbsp;</span>
+                    </form>
+                }
+            }
+            @rowno++
+            <div class="tr">
+                <span class="td">@rowno</span>
+                <span class="td">
+                    @Html.Editor("item_ProductName", new { htmlAttributes = new { @style = "width:100%" } })
+                </span>
+                <span class="td">&nbsp;</span>
+                <span class="td">&nbsp;</span>
+                <span class="td">&nbsp;</span>
+                <span class="td">&nbsp;</span>
+                <span class="td">
+                    @Html.ActionLink("添加产品", "CreateProduct", null, new { @onclick = "layerConfirm('确认要添加产品信息吗？', this); return false;" })
+                </span>
+            </div>
+        </div>
+        <div class="tfoot">
+            <div class="tr">
+                <span class="td" style="text-align:center;">合计：@rowno</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var errMsg = getParameter("errMsg");
+        if (errMsg.length > 0) {
+            top.layer.msg(errMsg);
+        }
+    });
+
+    function layerConfirm(msg, t) {
+        top.layer.confirm(msg, function (index) {
+            var siblings = $(t).parent().siblings();
+            t.onclick = "";
+            t.href = t.href + "?productName=" + $('#item_ProductName', $(siblings)).val();
+            t.click();
+            top.layer.close(index);
+        });
+    }
+</script>
+
+
+

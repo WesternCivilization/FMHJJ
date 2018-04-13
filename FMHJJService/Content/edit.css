@@ -1,0 +1,76 @@
+﻿table {
+    /*设置表格行间距*/
+    border-collapse: separate;
+    border-spacing: 0 1.6rem;
+    /*设置字体大小*/
+    font-size: 13px;
+}
+
+table .required {
+    float: left;
+    width: 90%;
+}
+
+table .short {
+    float: left;
+    width: 40%;
+}
+
+table label { /*标题覆盖粗体*/
+    /*font-weight: normal;*/
+}
+
+table .treelist {
+    height:300px; 
+    width:100%;
+}
+
+.asterisk-middle {
+    position: relative;
+    top: 7px;
+}
+
+.btn-save {
+    font-size: 12px;
+    /*text-shadow: black 5px 3px 3px;*/
+}
+
+.node_name {
+    font-size: 13px;
+}
+
+.t_r {
+    text-align: right;
+}
+
+.h_t {    
+    padding-top: 0px;
+}
+
+.f_t{    
+    margin-top: 0px;
+}
+
+input[type='radio'], input[type='checkbox'] {    
+    vertical-align:middle;
+    margin: 0 5px 0 0;
+}
+
+.v_m {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.f_m {
+    font-size:14px;
+    margin-top:10px;
+}
+
+.icon-font {
+    font-size: 30px;
+}
+
+.icon-font-gonggao {
+    font-size: 21px;
+    margin-right:10px;
+}

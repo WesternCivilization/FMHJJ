@@ -1,0 +1,480 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FMHJJModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Base_ProductInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Base_ProductInfo_Detail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductType" Type="int" />
+          <Property Name="CustomerUpper" Type="numeric" Precision="11" Scale="2" />
+          <Property Name="AreaUpper" Type="numeric" Precision="11" Scale="2" />
+          <Property Name="FirstRank" Type="int" />
+          <Property Name="LastRank" Type="int" />
+          <Property Name="UserLvl" Type="int" />
+        </EntityType>
+        <EntityType Name="Base_UserInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserType" Type="int" />
+          <Property Name="UserLvl" Type="int" />
+          <Property Name="ProductType" Type="int" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="32" />
+          <Property Name="Sex" Type="int" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="100" />
+          <Property Name="CompanyAddress" Type="varchar" MaxLength="500" />
+          <Property Name="CompanyPhone" Type="varchar" MaxLength="15" />
+          <Property Name="Mobile" Type="varchar" MaxLength="15" />
+          <Property Name="Fax" Type="varchar" MaxLength="15" />
+          <Property Name="Mail" Type="varchar" MaxLength="50" />
+          <Property Name="State" Type="int" />
+        </EntityType>
+        <EntityType Name="Base_UserInfo_Grant">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="FunctionID" Type="int" />
+          <Property Name="IsAllow" Type="int" />
+        </EntityType>
+        <EntityType Name="Data_BidManage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductType" Type="int" />
+          <Property Name="BidDate" Type="datetime" />
+          <Property Name="BidStartTime" Type="datetime" />
+          <Property Name="BidEndTime" Type="datetime" />
+          <Property Name="EstimateAmount" Type="numeric" Precision="11" Scale="2" />
+          <Property Name="CurrentPriceLower" Type="numeric" Precision="11" Scale="2" />
+          <Property Name="CurrentPriceUpper" Type="numeric" Precision="11" Scale="2" />
+          <Property Name="BidCount" Type="int" />
+          <Property Name="AmountMin" Type="numeric" Precision="11" Scale="2" />
+          <Property Name="BidManner" Type="int" />
+          <Property Name="Publisher" Type="varchar" MaxLength="50" />
+          <Property Name="PublishTime" Type="datetime" />
+          <Property Name="State" Type="int" />
+        </EntityType>
+        <EntityType Name="Data_Parameters">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ControlID" Type="varchar" MaxLength="30" />
+          <Property Name="ParameterName" Type="varchar" MaxLength="50" />
+          <Property Name="ParameterValue" Type="varchar" MaxLength="200" />
+          <Property Name="IsAllow" Type="int" />
+          <Property Name="Note" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Data_SmsManage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Phones" Type="varchar(max)" />
+          <Property Name="Message" Type="varchar(max)" />
+          <Property Name="State" Type="int" />
+        </EntityType>
+        <EntityType Name="Dict_FunctionMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PID" Type="int" />
+          <Property Name="FunctionName" Type="varchar" MaxLength="50" />
+          <Property Name="UserType" Type="int" />
+          <Property Name="Icon" Type="varchar" MaxLength="50" />
+          <Property Name="Url" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Dict_System">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PID" Type="int" />
+          <Property Name="DictKey" Type="varchar" MaxLength="50" />
+          <Property Name="DictValue" Type="varchar" MaxLength="50" />
+          <Property Name="Comment" Type="varchar" MaxLength="500" />
+          <Property Name="OrderID" Type="int" />
+          <Property Name="Enabled" Type="int" />
+        </EntityType>
+        <EntityType Name="Flw_BiddingInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BidID" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="BidPrice" Type="numeric" Precision="11" Scale="2" />
+          <Property Name="BidAmount" Type="numeric" Precision="11" Scale="2" />
+          <Property Name="BidTime" Type="datetime" />
+          <Property Name="Checked" Type="bit" />
+        </EntityType>
+        <EntityType Name="Flw_BiddingNotice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="200" />
+          <Property Name="NoticeType" Type="int" />
+          <Property Name="PublishTime" Type="datetime" />
+          <Property Name="Publisher" Type="varchar" MaxLength="50" />
+          <Property Name="PublishContent" Type="varchar(max)" />
+          <Property Name="PublishCompany" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityContainer Name="FMHJJModelStoreContainer">
+          <EntitySet Name="Base_ProductInfo" EntityType="Self.Base_ProductInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Base_ProductInfo_Detail" EntityType="Self.Base_ProductInfo_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Base_UserInfo" EntityType="Self.Base_UserInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Base_UserInfo_Grant" EntityType="Self.Base_UserInfo_Grant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Data_BidManage" EntityType="Self.Data_BidManage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Data_Parameters" EntityType="Self.Data_Parameters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Data_SmsManage" EntityType="Self.Data_SmsManage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dict_FunctionMenu" EntityType="Self.Dict_FunctionMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dict_System" EntityType="Self.Dict_System" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Flw_BiddingInfo" EntityType="Self.Flw_BiddingInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Flw_BiddingNotice" EntityType="Self.Flw_BiddingNotice" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FMHJJModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Base_UserInfo_Grant">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="FunctionID" Type="Int32" />
+          <Property Name="IsAllow" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Dict_FunctionMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PID" Type="Int32" />
+          <Property Name="FunctionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserType" Type="Int32" />
+          <Property Name="Icon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Dict_System">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PID" Type="Int32" />
+          <Property Name="DictKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DictValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="Enabled" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="FMHJJDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Base_UserInfo_Grant" EntityType="Self.Base_UserInfo_Grant" />
+          <EntitySet Name="Dict_FunctionMenu" EntityType="Self.Dict_FunctionMenu" />
+          <EntitySet Name="Dict_System" EntityType="Self.Dict_System" />
+          <EntitySet Name="Flw_BiddingNotice" EntityType="FMHJJModel.Flw_BiddingNotice" />
+          <EntitySet Name="Data_SmsManage" EntityType="FMHJJModel.Data_SmsManage" />
+          <EntitySet Name="Data_Parameters" EntityType="FMHJJModel.Data_Parameters" />
+          <EntitySet Name="Base_ProductInfo" EntityType="FMHJJModel.Base_ProductInfo" />
+          <EntitySet Name="Base_ProductInfo_Detail" EntityType="FMHJJModel.Base_ProductInfo_Detail" />
+          <EntitySet Name="Base_UserInfo" EntityType="FMHJJModel.Base_UserInfo" />
+          <EntitySet Name="Data_BidManage" EntityType="FMHJJModel.Data_BidManage" />
+          <EntitySet Name="Flw_BiddingInfo" EntityType="FMHJJModel.Flw_BiddingInfo" />
+        </EntityContainer>
+        <EntityType Name="Flw_BiddingNotice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="NoticeType" Type="Int32" />
+          <Property Name="PublishTime" Type="DateTime" Precision="3" />
+          <Property Name="Publisher" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PublishContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PublishCompany" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Data_SmsManage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Phones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Data_Parameters">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ControlID" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ParameterName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ParameterValue" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IsAllow" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Base_ProductInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Base_ProductInfo_Detail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductType" Type="Int32" />
+          <Property Name="CustomerUpper" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="AreaUpper" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="FirstRank" Type="Int32" />
+          <Property Name="LastRank" Type="Int32" />
+          <Property Name="UserLvl" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Base_UserInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserType" Type="Int32" />
+          <Property Name="UserLvl" Type="Int32" />
+          <Property Name="ProductType" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Sex" Type="Int32" />
+          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyPhone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Fax" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Data_BidManage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductType" Type="Int32" />
+          <Property Name="BidDate" Type="DateTime" Precision="3" />
+          <Property Name="BidStartTime" Type="DateTime" Precision="3" />
+          <Property Name="BidEndTime" Type="DateTime" Precision="3" />
+          <Property Name="EstimateAmount" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="CurrentPriceLower" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="CurrentPriceUpper" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="BidCount" Type="Int32" />
+          <Property Name="AmountMin" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="BidManner" Type="Int32" />
+          <Property Name="Publisher" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PublishTime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Flw_BiddingInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BidID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="BidPrice" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="BidAmount" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="BidTime" Type="DateTime" Precision="3" />
+          <Property Name="Checked" Type="Boolean" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FMHJJModelStoreContainer" CdmEntityContainer="FMHJJDBEntities">
+          <EntitySetMapping Name="Base_UserInfo_Grant">
+            <EntityTypeMapping TypeName="FMHJJModel.Base_UserInfo_Grant">
+              <MappingFragment StoreEntitySet="Base_UserInfo_Grant">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
+                <ScalarProperty Name="IsAllow" ColumnName="IsAllow" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dict_FunctionMenu">
+            <EntityTypeMapping TypeName="FMHJJModel.Dict_FunctionMenu">
+              <MappingFragment StoreEntitySet="Dict_FunctionMenu">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dict_System">
+            <EntityTypeMapping TypeName="FMHJJModel.Dict_System">
+              <MappingFragment StoreEntitySet="Dict_System">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="DictKey" ColumnName="DictKey" />
+                <ScalarProperty Name="DictValue" ColumnName="DictValue" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Flw_BiddingNotice">
+            <EntityTypeMapping TypeName="FMHJJModel.Flw_BiddingNotice">
+              <MappingFragment StoreEntitySet="Flw_BiddingNotice">
+                <ScalarProperty Name="PublishCompany" ColumnName="PublishCompany" />
+                <ScalarProperty Name="PublishContent" ColumnName="PublishContent" />
+                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+                <ScalarProperty Name="PublishTime" ColumnName="PublishTime" />
+                <ScalarProperty Name="NoticeType" ColumnName="NoticeType" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Data_SmsManage">
+            <EntityTypeMapping TypeName="FMHJJModel.Data_SmsManage">
+              <MappingFragment StoreEntitySet="Data_SmsManage">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Phones" ColumnName="Phones" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Data_Parameters">
+            <EntityTypeMapping TypeName="FMHJJModel.Data_Parameters">
+              <MappingFragment StoreEntitySet="Data_Parameters">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="IsAllow" ColumnName="IsAllow" />
+                <ScalarProperty Name="ParameterValue" ColumnName="ParameterValue" />
+                <ScalarProperty Name="ParameterName" ColumnName="ParameterName" />
+                <ScalarProperty Name="ControlID" ColumnName="ControlID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Base_ProductInfo">
+            <EntityTypeMapping TypeName="FMHJJModel.Base_ProductInfo">
+              <MappingFragment StoreEntitySet="Base_ProductInfo">
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Base_ProductInfo_Detail">
+            <EntityTypeMapping TypeName="FMHJJModel.Base_ProductInfo_Detail">
+              <MappingFragment StoreEntitySet="Base_ProductInfo_Detail">
+                <ScalarProperty Name="UserLvl" ColumnName="UserLvl" />
+                <ScalarProperty Name="LastRank" ColumnName="LastRank" />
+                <ScalarProperty Name="FirstRank" ColumnName="FirstRank" />
+                <ScalarProperty Name="AreaUpper" ColumnName="AreaUpper" />
+                <ScalarProperty Name="CustomerUpper" ColumnName="CustomerUpper" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Base_UserInfo">
+            <EntityTypeMapping TypeName="FMHJJModel.Base_UserInfo">
+              <MappingFragment StoreEntitySet="Base_UserInfo">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="CompanyPhone" ColumnName="CompanyPhone" />
+                <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="UserLvl" ColumnName="UserLvl" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Data_BidManage">
+            <EntityTypeMapping TypeName="FMHJJModel.Data_BidManage">
+              <MappingFragment StoreEntitySet="Data_BidManage">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="PublishTime" ColumnName="PublishTime" />
+                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+                <ScalarProperty Name="BidManner" ColumnName="BidManner" />
+                <ScalarProperty Name="AmountMin" ColumnName="AmountMin" />
+                <ScalarProperty Name="BidCount" ColumnName="BidCount" />
+                <ScalarProperty Name="CurrentPriceUpper" ColumnName="CurrentPriceUpper" />
+                <ScalarProperty Name="CurrentPriceLower" ColumnName="CurrentPriceLower" />
+                <ScalarProperty Name="EstimateAmount" ColumnName="EstimateAmount" />
+                <ScalarProperty Name="BidEndTime" ColumnName="BidEndTime" />
+                <ScalarProperty Name="BidStartTime" ColumnName="BidStartTime" />
+                <ScalarProperty Name="BidDate" ColumnName="BidDate" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Flw_BiddingInfo">
+            <EntityTypeMapping TypeName="FMHJJModel.Flw_BiddingInfo">
+              <MappingFragment StoreEntitySet="Flw_BiddingInfo">
+                <ScalarProperty Name="Checked" ColumnName="Checked" />
+                <ScalarProperty Name="BidTime" ColumnName="BidTime" />
+                <ScalarProperty Name="BidAmount" ColumnName="BidAmount" />
+                <ScalarProperty Name="BidPrice" ColumnName="BidPrice" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BidID" ColumnName="BidID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

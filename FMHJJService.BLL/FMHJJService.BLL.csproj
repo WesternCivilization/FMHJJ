@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BCBC3EA2-3C42-4D5F-842A-45E614BBADCE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FMHJJService.BLL</RootNamespace>
+    <AssemblyName>FMHJJService.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.4.6.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\BaseService.cs" />
+    <Compile Include="CommonBLL\FMHJJBLL.cs" />
+    <Compile Include="FMHJJ\Base_ProductInfo_DetailService.cs" />
+    <Compile Include="FMHJJ\Base_ProductInfoService.cs" />
+    <Compile Include="FMHJJ\Base_UserInfo_GrantService.cs" />
+    <Compile Include="FMHJJ\Data_BidManageService.cs" />
+    <Compile Include="FMHJJ\Data_ParametersService.cs" />
+    <Compile Include="FMHJJ\Data_SmsManageService.cs" />
+    <Compile Include="FMHJJ\Dict_FunctionMenuService.cs" />
+    <Compile Include="FMHJJ\Dict_SystemService.cs" />
+    <Compile Include="FMHJJ\Flw_BiddingInfoService.cs" />
+    <Compile Include="FMHJJ\Flw_BiddingNoticeService.cs" />
+    <Compile Include="IBLL\FMHJJ\IBase_ProductInfo_DetailService.cs" />
+    <Compile Include="IBLL\FMHJJ\IBase_ProductInfoService.cs" />
+    <Compile Include="IBLL\FMHJJ\IBase_UserInfoService.cs" />
+    <Compile Include="FMHJJ\Base_UserInfoService.cs" />
+    <Compile Include="Container\BLLContainer.cs" />
+    <Compile Include="IBLL\FMHJJ\IBase_UserInfo_GrantService.cs" />
+    <Compile Include="IBLL\FMHJJ\IData_BidManageService.cs" />
+    <Compile Include="IBLL\FMHJJ\IData_ParametersService.cs" />
+    <Compile Include="IBLL\FMHJJ\IData_SmsManageService.cs" />
+    <Compile Include="IBLL\FMHJJ\IDict_FunctionMenuService.cs" />
+    <Compile Include="IBLL\FMHJJ\IDict_SystemService.cs" />
+    <Compile Include="IBLL\FMHJJ\IFlw_BiddingInfoService.cs" />
+    <Compile Include="IBLL\FMHJJ\IFlw_BiddingNoticeService.cs" />
+    <Compile Include="IBLL\IBaseService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FMHJJService.DAL\FMHJJService.DAL.csproj">
+      <Project>{0fa3e9cf-9fd2-4d99-8efa-c44acfda160d}</Project>
+      <Name>FMHJJService.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FMHJJService.Model\FMHJJService.Model.csproj">
+      <Project>{1e38ec5a-0a89-4d9e-9cdf-6f79c580b6a1}</Project>
+      <Name>FMHJJService.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

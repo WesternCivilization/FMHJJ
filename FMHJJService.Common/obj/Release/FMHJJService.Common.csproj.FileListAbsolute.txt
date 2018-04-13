@@ -1,0 +1,9 @@
+E:\FMHJJ\FMHJJService.Common\bin\Release\FMHJJService.Common.dll
+E:\FMHJJ\FMHJJService.Common\bin\Release\FMHJJService.Common.pdb
+E:\FMHJJ\FMHJJService.Common\bin\Release\Fleck.dll
+E:\FMHJJ\FMHJJService.Common\bin\Release\Newtonsoft.Json.dll
+E:\FMHJJ\FMHJJService.Common\bin\Release\ThoughtWorks.QRCode.dll
+E:\FMHJJ\FMHJJService.Common\bin\Release\Newtonsoft.Json.xml
+E:\FMHJJ\FMHJJService.Common\obj\Release\FMHJJService.Common.csprojResolveAssemblyReference.cache
+E:\FMHJJ\FMHJJService.Common\obj\Release\FMHJJService.Common.dll
+E:\FMHJJ\FMHJJService.Common\obj\Release\FMHJJService.Common.pdb

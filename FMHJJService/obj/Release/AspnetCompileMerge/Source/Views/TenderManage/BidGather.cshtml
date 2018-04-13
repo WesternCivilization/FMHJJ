@@ -1,0 +1,213 @@
+﻿@model FMHJJService.Model.FMHJJ.Flw_BiddingInfo
+
+@{
+    ViewBag.Title = "当前竞价信息";
+    var rowno = 0;
+}
+
+@section Styles
+{
+    
+}
+
+@section Scripts
+{
+    <script>
+        // 倒计时
+        var _ordertimer = null;
+        var leftTime = 0;
+        function leftTimer() {
+            leftTime = leftTime - 1000;
+            //var leftTime = (new Date(enddate)) - new Date(); //计算剩余的毫秒数
+            //var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
+            var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
+            var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+            var seconds = parseInt(leftTime / 1000 % 60, 10);//计算剩余的秒数
+            //days = checkTime(days);
+            hours = checkTime(hours);
+            minutes = checkTime(minutes);
+            seconds = checkTime(seconds);
+            if (hours >= 0 || minutes >= 0 || seconds >= 0) document.getElementById("biddingLeftTime").innerHTML = hours + "时" + minutes + "分" + seconds + "秒！";
+            if (hours <= 0 && minutes <= 0 && seconds <= 0) {
+                window.clearInterval(_ordertimer);
+                _ordertimer = null;
+                window.location = '@Url.Action("NoticePublish", "NoticeManage")';
+            }
+        }
+
+        function checkTime(i) { //将0-9的数字前面加上0，例1变为01
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+
+        function go(lefttimestr) {
+            if (lefttimestr == '0')
+            {
+                $('#biddingLabel').hide();
+                return;
+            }
+
+	    $('#biddingLabel').show();
+
+            //var date = new Date();
+            //var endDate = new Date(date.setMilliseconds(date.getMilliseconds() + parseFloat(lefttime)));
+            leftTime = parseFloat(lefttimestr);
+	    leftTimer();
+            _ordertimer = setInterval(function () { leftTimer() }, 1000);
+            
+        }
+    </script>
+}
+
+@using (Ajax.BeginForm("BidGather", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "dig.Loading",
+    OnSuccess = "dig.Success",
+    OnFailure = "dig.Failure",
+    OnComplete = "dig.Complete"
+}, new { @class = "form-inline well well-sm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.BidID)
+    <div class="container-fluid" style="padding-top:5px;">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="control-group">
+                    <div class="controls">                        
+                        <label class="control-label">申请量（吨）：</label>
+                        @Html.EditorFor(model => model.BidAmount, new { htmlAttributes = new { @required = "required", @class = "iptext required", @style = "width:150px;" } })
+                        <font color="red" class="asterisk-middle">*</font>
+                        &nbsp;&nbsp;<label class="control-label">申请价格（元）：</label>
+                        @Html.EditorFor(model => model.BidPrice, new { htmlAttributes = new { @required = "required", @class = "iptext required", @style = "width:150px;" } })
+                        <font color="red" class="asterisk-middle">*</font>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<input id="btnSubmit" type="submit" class="btn btn-default" value="提交申请" />
+                        &nbsp;&nbsp;<input id="btnBack" type="button" class="btn btn-default" value="返回" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="table-responsive">
+
+    <table border="1" style="width:100%;" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="table table-width table-bordered table-condensed table-hover">
+        <caption>
+            <label class="control-label" style="float:left;margin-left:5px;">当前竞价信息</label>
+            <label class="control-label" style="float:right;margin-right:5px;" id="biddingLabel"><font color="red">竞价已开始</font>，距竞价结束还有：<font color="red" id="biddingLeftTime"></font></label>
+        </caption>
+        <thead>
+            <tr style="background: #C7D9EF;">
+                <th>产品</th>
+                @*<th>预估量</th>*@
+                <th>最大申报量</th>
+                <th>本期报价下限、上限（元）</th>
+                <th>本期加权平均成交价（元）</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@ViewBag.productName</td>
+                @*<td>@ViewBag.data_BidManage.EstimateAmount</td>*@
+                <td>@ViewBag.MaxAmount</td>
+                <td>@ViewBag.data_BidManage.CurrentPriceLower-@ViewBag.data_BidManage.CurrentPriceUpper</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table border="1" style="width:100%;" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="table table-width table-bordered table-condensed table-hover">
+        <caption>
+            <label class="control-label" style="float:left;">客户成交统计</label>
+        </caption>
+        <thead>
+            <tr style="background: #C7D9EF;">
+                <th>产品</th>
+                @*<th>排名</th>*@
+                <th>等级</th>
+                <th>单位信息</th>
+                <th>客户成交总量（吨）</th>
+                <th>客户加权平均成交价</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <table border="1" style="width:100%;" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="table table-width table-bordered table-condensed table-hover">
+        <caption>
+            <label class="control-label" style="float:left;">申报详情</label>
+        </caption>
+        <thead>
+            <tr style="background: #C7D9EF;">
+                <th>产品</th>
+                @*<th>排名</th>*@
+                <th>等级</th>
+                <th>单位信息</th>
+                <th>申报价（元）</th>
+                <th>申报量（吨）</th>
+                <th>申报时间</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.flw_BiddingInfoList)
+            {
+                rowno++;
+                if (item.UserID != ViewBag.userId)
+                {
+                    continue;
+                }
+                <tr>
+                    <td>@ViewBag.productName</td>
+                    @*<td>@rowno</td>*@
+                    <td>@FMHJJService.Business.FMHJJ.UserBusiness.GetUserLvl(item.UserID)</td>
+                    <td>@FMHJJService.Business.FMHJJ.UserBusiness.GetUser(item.UserID).CompanyName</td>
+                    <td>@item.BidPrice</td>
+                    <td>@item.BidAmount</td>
+                    <td>@string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.BidTime)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<script type="text/javascript">
+    var dig = {
+        Loading: function () {
+            //$.bootstrapLoading.start({ loadingTips: "正在录入数据，请稍候..." });
+        },
+        Success: function (result) {
+            top.layer.msg(result.Msg, { time: 1000 }, function () {
+                if (result.Status == "y") {
+                    window.location = '@Url.Action("BidGather", "TenderManage")';
+                }
+                else {
+                    dig.Complete();
+                }
+            });
+        },
+        Failure: function (result) {
+            top.layer.msg(result.Msg);
+            dig.Complete();
+        },
+        Complete: function () {
+
+        },
+        ErrorMsg: function (msg) {
+            top.layer.msg(msg);
+        }
+    };
+
+    $(function () {
+        //开始倒计时
+        go('@ViewBag.timeleft');
+
+        $('#btnBack').on('click', function () {
+            window.location = '@Url.Action("NoticePublish", "NoticeManage")';
+        });
+    });
+</script>
+

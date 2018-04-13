@@ -1,0 +1,243 @@
+﻿@model List<FMHJJService.Model.FMHJJ.Flw_BiddingNotice>
+
+@{
+    ViewBag.Title = "竞价公告";
+}
+
+@section Styles
+{
+    <link href="~/Content/FixTable.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        .tita {
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+            text-align: center;
+            font-weight: bold;
+            color: #04326F;
+            height: 18px;
+            line-height: 18px;
+            font-size: 14px;
+        }
+
+        .fba {
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+            text-align: center;
+            height: 24px;
+            line-height: 24px;
+        }
+
+        .gg_content {
+            line-height: 20px;
+        }
+    </style>
+}
+
+<table border="1" style="border-collapse:collapse;" cellspacing="0" cellpadding="0" class="table table-width table-bordered table-condensed table-hover">
+    @{
+        var userInfo = Session["loginUser"] as FMHJJService.Model.CustomModel.FMHJJ.UserInfoCacheModel;
+    }
+    <thead>
+        <tr>
+            <th>产品</th>
+            <th>竞价日期</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            @if (userInfo != null && userInfo.UserType == (int)FMHJJService.Common.Enum.UserType.User)
+            {
+                <th>预估量（吨）</th>
+            }            
+            <th>本期报价下限、上限</th>
+            <th>可申报单数</th>
+            <th>发布人</th>
+            <th>发布时间</th>
+            <th>进入竞价页</th>
+        </tr>
+    </thead>
+    <tbody>        
+        @if (userInfo == null || (userInfo.UserType == (int)FMHJJService.Common.Enum.UserType.Customer && (userInfo.UserLvl == null || userInfo.UserLvl <= 0)))
+        {
+            //对匿名用户或没有通过审核的客户，不显示竞价项目信息
+        }
+        else
+        {
+            var userId = userInfo.ID;
+            var flw_BiddingInfoService = FMHJJService.BLL.Container.BLLContainer.Resolve<FMHJJService.BLL.IBLL.FMHJJ.IFlw_BiddingInfoService>();
+            var flw_BiddingIDs = flw_BiddingInfoService.GetModels(p => p.UserID == userId && ((DateTime)p.BidTime).Month == DateTime.Now.Month).Select(o => o.BidID).ToList();
+            var data_BidManageService = FMHJJService.BLL.Container.BLLContainer.Resolve<FMHJJService.BLL.IBLL.FMHJJ.IData_BidManageService>();
+            var data_BidManage = data_BidManageService.GetModels(p => ((DateTime)p.BidDate).Month == DateTime.Now.Month).ToList();
+            foreach (var item in data_BidManage)
+            {
+                var start = (DateTime)item.BidStartTime;
+                var end = (DateTime)item.BidEndTime;
+                var now = DateTime.Now;
+                var bidId = item.ID;
+                var bidCount = flw_BiddingInfoService.GetCount(p => p.BidID == bidId);
+
+                if (userInfo.UserType == (int)FMHJJService.Common.Enum.UserType.User && FMHJJService.Common.CommonConfig.InvisibleMan.Contains(userInfo.UserName))
+                {
+                    <tr>
+                        <td>@FMHJJService.Business.FMHJJ.ProductTypeBusiness.GetProductName(item.ProductType)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.BidDate)</td>
+                        <td>@string.Format("{0:HH:mm:ss}", item.BidStartTime)</td>
+                        <td>@string.Format("{0:HH:mm:ss}", item.BidEndTime)</td>
+                        <td>@Html.DisplayFor(modelItem => item.EstimateAmount, new { htmlAttributes = new { @style = "width:100%" } })</td>
+                        <td>@Html.DisplayFor(modelItem => item.CurrentPriceLower, new { htmlAttributes = new { @style = "width:100%" } })-@Html.DisplayFor(modelItem => item.CurrentPriceUpper, new { htmlAttributes = new { @style = "width:100%" } })</td>
+                        <td>@Html.DisplayFor(modelItem => item.BidCount, new { htmlAttributes = new { @style = "width:100%" } })</td>
+                        <td>@Html.DisplayFor(modelItem => item.Publisher, new { htmlAttributes = new { @style = "width:100%" } })</td>
+                        <td>@string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.PublishTime)</td>
+                        <td>
+                            @Html.ActionLink("申报详情", "BidView", "TenderManage", new { id = item.ID }, null)
+                            @if (item.State != 1)
+                            {                                
+                                if (DateTime.Compare(now, end) > 0 && FMHJJService.Common.CommonConfig.SuperName.Contains(userInfo.UserName))
+                                {
+                                    @:|
+                                    @Html.ActionLink("审核", "BidVerify", "TenderManage", new { id = item.ID }, null)
+                                }
+                            }
+                            else
+                            {
+                                @:|
+                                @Html.ActionLink("查看", "BidCheck", "TenderManage", new { id = item.ID }, null)
+                            }
+                        </td>
+                    </tr>
+                }
+                else if (DateTime.Compare(now, end) > 0 && bidCount == 0)
+                {
+                    //无人投标项目不显示
+                    continue;
+                }
+                //else if (userInfo.UserType == (int)FMHJJService.Common.Enum.UserType.Customer &&
+                //    (
+                //        (item.ProductType != userInfo.ProductType) ||
+                //        (DateTime.Compare(now, end) > 0 && (!flw_BiddingIDs.Contains(bidId) || item.State != 1))
+                //    )
+                //)
+                //{
+                //    //对于客户，不是同一品名或未参与竞价或未审核的项目不显示
+                //    continue;
+                //}
+                else if (userInfo.UserType == (int)FMHJJService.Common.Enum.UserType.User && !FMHJJService.Common.CommonConfig.SuperName.Contains(userInfo.UserName) && item.State != 1)
+                {
+                    //对于普通用户，未审核的项目不显示
+                    continue;
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            @FMHJJService.Business.FMHJJ.ProductTypeBusiness.GetProductName(item.ProductType)
+                        </td>
+                        <td>
+                            @string.Format("{0:yyyy-MM-dd}", item.BidDate)
+                        </td>
+                        <td>
+                            @string.Format("{0:HH:mm:ss}", item.BidStartTime)
+                        </td>
+                        <td>
+                            @string.Format("{0:HH:mm:ss}", item.BidEndTime)
+                        </td>
+@if (userInfo != null && userInfo.UserType == (int)FMHJJService.Common.Enum.UserType.User)
+{
+    <td>@Html.DisplayFor(modelItem => item.EstimateAmount, new { htmlAttributes = new { @style = "width:100%" } })</td>
+}
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CurrentPriceLower, new { htmlAttributes = new { @style = "width:100%" } })-@Html.DisplayFor(modelItem => item.CurrentPriceUpper, new { htmlAttributes = new { @style = "width:100%" } })
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.BidCount, new { htmlAttributes = new { @style = "width:100%" } })</td>
+                        <td>@Html.DisplayFor(modelItem => item.Publisher, new { htmlAttributes = new { @style = "width:100%" } })</td>
+                        <td>
+                            @string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.PublishTime)
+                        </td>
+                        <td>
+                            @if (DateTime.Compare(now, start) < 0)
+                            {
+                                //未开始的项目不显示
+                                @:未开始
+                            }
+                            else if (DateTime.Compare(now, start) >= 0 && DateTime.Compare(now, end) <= 0)
+                            {
+                                if (userInfo.UserType == (int)FMHJJService.Common.Enum.UserType.User)
+                                {
+                                    @:竞价进行中
+                                }
+                                else if (userInfo.UserType == (int)FMHJJService.Common.Enum.UserType.Customer)
+                                {
+                                    if (item.ProductType != userInfo.ProductType)
+                                    {
+                                        @:竞价进行中
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink("进入", "BidGather", "TenderManage", new { id = item.ID }, null)
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (item.State != 1)
+                                {
+                                    if (userInfo.UserType == (int)FMHJJService.Common.Enum.UserType.Customer)
+                                    {
+                                        @:审核中
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink("审核", "BidVerify", "TenderManage", new { id = item.ID }, null)
+                                    }
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("查看", "BidCheck", "TenderManage", new { id = item.ID }, null)
+                                    if (userInfo.UserType == (int)FMHJJService.Common.Enum.UserType.User && FMHJJService.Common.CommonConfig.SuperName.Contains(userInfo.UserName))
+                                    {
+                                        @:|
+                                        @Html.ActionLink("发送短信", "SendSms", "TenderManage", new { id = item.ID }, null)
+                                    }
+                                }
+                            }                            
+                        </td>
+                    </tr>
+                }
+            }
+        }        
+    </tbody>
+</table>
+
+@foreach (var item in Model)
+{
+    <table width="100%" style="border-collapse:collapse;display:none;" border="1" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td>
+                    <div class="gonggao">
+                        <div class="gg_title">
+                            <div class="tita">@item.Title</div>
+                            <div class="fba">发布人：@item.PublishCompany @item.Publisher @item.PublishTime.Value.ToString("yyyy/MM/dd HH:mm:ss")</div>
+                        </div>
+                        <div class="gg_content">
+                            <div class="gg_content">
+                                <div class="gg_content">
+                                    @Html.Raw(item.PublishContent)
+                                </div>                                
+                            </div>                            
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<script>
+    $(function () {
+        var errMsg = getParameter("errMsg");
+        if (errMsg.length > 0) {
+            top.layer.msg(errMsg);
+        }
+    });
+</script>

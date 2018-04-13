@@ -1,0 +1,16 @@
+E:\FMHJJ\FMHJJService.Model\bin\Release\FMHJJService.Model.dll.config
+E:\FMHJJ\FMHJJService.Model\bin\Release\FMHJJService.Model.dll
+E:\FMHJJ\FMHJJService.Model\bin\Release\FMHJJService.Model.pdb
+E:\FMHJJ\FMHJJService.Model\bin\Release\EntityFramework.dll
+E:\FMHJJ\FMHJJService.Model\bin\Release\EntityFramework.SqlServer.dll
+E:\FMHJJ\FMHJJService.Model\bin\Release\FMHJJService.Common.dll
+E:\FMHJJ\FMHJJService.Model\bin\Release\Newtonsoft.Json.dll
+E:\FMHJJ\FMHJJService.Model\bin\Release\FMHJJService.Common.pdb
+E:\FMHJJ\FMHJJService.Model\bin\Release\EntityFramework.xml
+E:\FMHJJ\FMHJJService.Model\bin\Release\EntityFramework.SqlServer.xml
+E:\FMHJJ\FMHJJService.Model\bin\Release\Newtonsoft.Json.xml
+E:\FMHJJ\FMHJJService.Model\bin\Release\zh-Hans\EntityFramework.resources.dll
+E:\FMHJJ\FMHJJService.Model\bin\Release\zh-Hans\EntityFramework.SqlServer.resources.dll
+E:\FMHJJ\FMHJJService.Model\obj\Release\FMHJJService.Model.csprojResolveAssemblyReference.cache
+E:\FMHJJ\FMHJJService.Model\obj\Release\FMHJJService.Model.dll
+E:\FMHJJ\FMHJJService.Model\obj\Release\FMHJJService.Model.pdb

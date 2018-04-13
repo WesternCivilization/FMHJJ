@@ -1,0 +1,173 @@
+﻿@section Styles
+{
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    @Styles.Render("~/Content/ace/css/css")
+    @Styles.Render("~/Content/sidebar-menu/css")
+    <link href="~/Content/iconfont/css/iconfont.css" rel="stylesheet" />
+
+    <style type="text/css">
+        body {
+            font-size: 12px;
+            line-height: normal; 
+        }
+
+        .nav > li > a {
+            padding: 5px 10px;
+        }
+
+        .tab-content {
+            padding-top: 3px;
+        }
+
+        #footer{
+            position: fixed;
+            left: 190px;
+            right: 0;
+            bottom: 0;
+            height: 44px;
+            line-height: 44px;
+            padding: 0 15px;
+            background-color: #eee
+        }
+    </style>
+}
+
+@section Scripts
+{
+    @Scripts.Render("~/Index/script")    
+}
+
+<div class="navbar navbar-default" id="navbar">
+    <div class="navbar-container" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="#" class="navbar-brand">
+                <small>
+                    华能荆门电厂粉煤灰网上竞价系统
+                </small>
+            </a>
+        </div>
+
+        <div class="navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+                <li class="light-blue">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <img class="nav-user-photo" src="/Content/ace/avatars/avatar2.png" alt="Admin's Photo" />
+                        <span class="user-info">
+                            <small id="userhot">当前用户</small>
+                            <label id="uid">
+                                @if (Session["loginUser"] != null)
+                                {
+                                    @(((FMHJJService.Model.CustomModel.FMHJJ.UserInfoCacheModel)Session["loginUser"]).UserName)
+                                }
+                                else
+                                {
+                                    @Html.Raw("未登录")
+                                }
+                            </label>                            
+                        </span>
+
+                        <i class="icon-caret-down"></i>
+                    </a>
+                    <ul id="userdropdownlist" class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close"> 
+                        @if (Session["loginUser"] == null)
+                        {
+                            <li class="divider"></li>
+                            <li>
+                                <a href="@Url.Action("Login", "Home")">
+                                    <i class="icon-cloud"></i>
+                                    登录
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#" onclick='openDialog("../UserManage/ChangePassword", "修改密码", "40%", "40%")'>
+                                    <i class="icon-cog"></i>
+                                    修改密码
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="../Home/Logout">
+                                    <i class="icon-off"></i>
+                                    退出
+                                </a>
+                            </li>
+                        }                                                                   
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="main-container" id="main-container">
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+        <div class="sidebar" id="sidebar" style="overflow:scroll;overflow-x:auto;overflow-y:auto;">
+            <ul class="nav nav-list" id="menu"></ul>
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ul id="menuList" class="nav nav-tabs" role="tablist">
+                            <li id="tab_@(ViewData["MenuId"])" class="active"><a href="#@(ViewData["MenuId"])" role="tab" data-toggle="tab">新竞价公告 </a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="@(ViewData["MenuId"])">
+                                @*<iframe src="/NoticeManage/NoticePublish" width="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div style="height: 30px;line-height: 30px;text-align: center;">@@2018 武汉市踏弛智能科技有限公司 鄂ICP备14011985号 版权所有 仿冒必纠</div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        //$.bootstrapLoading.start({ loadingTips: "正在处理数据，请稍候..." });
+
+        var mainHeight = $(window).height() - 94;
+        var content = '<iframe src="/NoticeManage/NoticePublish" width="100%" height="' + mainHeight +
+                    '" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes" allowtransparency="yes"></iframe>';
+        $("#@(ViewData["MenuId"])").html(content);
+    });
+
+    function getMenu(dd) {
+        if (dd.length > 0) {
+            menuData = loadMenuTree(dd, null, []);
+            $("#menu").find("li").remove();
+            $("#menu").sidebarMenu({
+                data: menuData
+            });
+        }
+    }
+
+    function loadMenuTree(list, pmodel, menuData) {
+        $.each(list, function (i, model) {
+            if (model.PID == ((pmodel == null) ? 0 : pmodel.ID)) {
+                menuData.push({ id: model.ID, text: model.FunctionName, icon: model.Icon, url: model.Url, 'class': '', menus: loadMenuTree(list, model, []) });
+            }
+        });
+
+        return menuData;
+    }
+
+</script>
+@(Html.Raw(ViewData["Menus"]))
+
+<script src="/Content/ace/js/ace-extra.min.js"></script>
+<script src="/Content/ace/js/ace.min.js"></script>
+

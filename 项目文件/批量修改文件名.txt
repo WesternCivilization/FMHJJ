@@ -1,0 +1,16 @@
+::for /f %%a in ('dir /s /b a*') do (
+::    echo %%a：文件完整信息
+::    echo %%~da：保留文件所在驱动器信息
+::    echo %%~pa：保留文件所在路径信息
+::    echo %%~na：保留文件名信息
+::    echo %%~xa：保留文件后缀信息
+::    echo %%~za：保留文件大小信息
+::    echo %%~ta：保留文件修改时间信息
+::    echo %%~dpa：保留文件所在驱动器和所在路径信息
+::    echo %%~nxa：保留文件名及后缀信息
+::    echo %%~pnxa：保留文件所在路径及文件名和后缀信息
+::    echo %%~dpna：保留文件驱动器、路径、文件名信息
+::    echo %%~dpnxa：保留文件驱动器、路径、文件名、后缀信息
+::)
+
+for /f "delims=" %a in ('dir /b/s/a-d *.cs') do (rename "%a" I%~naDAL.cs)

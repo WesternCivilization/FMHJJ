@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="2" virtualPath="/Views/UserManage/GrantUser.cshtml" hash="5c1b350b" filehash="705343b4b08" flags="110000" assembly="App_Web_xflx3ujs" type="ASP._Page_Views_UserManage_GrantUser_cshtml">
+    <filedeps>
+        <filedep name="/Views/UserManage/GrantUser.cshtml" />
+    </filedeps>
+</preserve>

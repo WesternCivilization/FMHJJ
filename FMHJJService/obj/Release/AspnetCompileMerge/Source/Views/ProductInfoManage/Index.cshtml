@@ -1,0 +1,138 @@
+﻿@model IEnumerable<FMHJJService.Model.CustomModel.FMHJJ.ProductInfoModel>
+
+@{
+    ViewBag.Title = "产品类别";
+    var rowno = 0;
+}
+
+<div>
+    <table id="productInfoTable" class="table" style="text-align:center;">
+        <thead>
+            <tr>
+                <th>
+                    序号
+                </th>
+                <th>
+                    产品名称
+                </th>
+                <th>
+                    客户上限（%）
+                </th>
+                @*<th>
+                    区域上限（%）
+                </th>*@
+                <th>
+                    开始排名
+                </th>
+                <th>
+                    结束排名
+                </th>
+                <th>
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                rowno++;
+                <tr>
+                    <td>
+                        @rowno
+                    </td>
+                    <td width="15%">
+                        @Html.EditorFor(modelItem => item.ProductName, new { htmlAttributes = new { @style = "width:100%;" } })
+                    </td>
+                    <td width="15%">&nbsp;</td>
+                    @*<td width="15%">&nbsp;</td>*@
+                    <td width="15%">&nbsp;</td>
+                    <td width="15%">&nbsp;</td>
+                    <td>
+                        @Html.ActionLink("更新产品", "UpdateProduct", new { id = item.ID }, new { @onclick = "layerConfirm('确认要更新产品信息吗？', this); return false;" }) |
+                        @Html.ActionLink("更新等级", null, null, new { @onclick = "$('form', $(this).parent().parent().next()).submit(); return false;" }) |
+                        @Html.ActionLink("删除", "DeleteProduct", new { id = item.ID }, new { @onclick = "layerConfirm('确认要删除产品信息吗？', this); return false;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="4">
+                        <form method="post" action="@Url.Action("UpdateLevel", "ProductInfoManage")">
+                            <table style="width:100%;" class="table">
+                                @{
+                                    var ProductInfoDetails = item.ProductInfoDetails;
+                                }
+                                @for (int i = 0; i < ProductInfoDetails.Count; i++)
+                                {
+                                    <tr>
+                                        <td width="20%">
+                                            @Html.HiddenFor(modelItem => ProductInfoDetails[i].ID)
+                                            @Html.HiddenFor(modelItem => ProductInfoDetails[i].ProductType)
+                                            @Html.HiddenFor(modelItem => ProductInfoDetails[i].UserLvl)
+                                            @FMHJJService.Business.FMHJJ.DictSystemBusiness.GetDictKey("客户等级", ProductInfoDetails[i].UserLvl.ToString())
+                                        </td>
+                                        <td width="20%">
+                                            @Html.EditorFor(modelItem => ProductInfoDetails[i].CustomerUpper, new { htmlAttributes = new { @style = "width:100%;" } })
+                                        </td>
+                                        @*<td width="20%">
+                                            @Html.EditorFor(modelItem => ProductInfoDetails[i].AreaUpper, new { htmlAttributes = new { @style = "width:100%;" } })
+                                        </td>*@
+                                        <td width="20%">
+                                            @Html.EditorFor(modelItem => ProductInfoDetails[i].FirstRank, new { htmlAttributes = new { @style = "width:100%;" } })
+                                        </td>
+                                        <td width="20%">
+                                            @Html.EditorFor(modelItem => ProductInfoDetails[i].LastRank, new { htmlAttributes = new { @style = "width:100%;" } })
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </form>
+                    </td>
+                    <td></td>
+                </tr>                
+            }
+
+            <tr>
+                <td>
+                    @(++rowno)
+                </td>
+                <td>
+                    @Html.Editor("item_ProductName", new { htmlAttributes = new { @style = "width:100%" } })
+                </td>
+                <td>&nbsp;</td>
+                @*<td>&nbsp;</td>*@
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>
+                    @Html.ActionLink("添加产品", "CreateProduct", null, new { @onclick = "layerConfirm('确认要添加产品信息吗？', this); return false;" })
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td style="text-align:left;" colspan="6">合计：@rowno</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script>
+    $(function () {
+        var errMsg = getParameter("errMsg");
+        if (errMsg.length > 0) {
+            top.layer.msg(errMsg);
+        }
+    });
+
+    function layerConfirm(msg, t) {
+        top.layer.confirm(msg, function (index) {
+            var siblings = $(t).parent().siblings();
+            t.onclick = "";
+            t.href = t.href + "?productName=" + $('#item_ProductName', $(siblings)).val();
+            t.click();
+            top.layer.close(index);
+        });
+    }
+</script>
+
+
+

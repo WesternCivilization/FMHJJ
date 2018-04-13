@@ -1,0 +1,124 @@
+﻿@model List<FMHJJService.Model.FMHJJ.Flw_BiddingNotice>
+
+@{
+    ViewBag.Title = "发布公告";
+    var rowno = 0;
+}
+
+@section Styles
+{
+    <link href="~/Content/list.css" rel="stylesheet" />
+}
+
+@using (Html.BeginForm("Index", ViewContext.RouteData.GetRequiredString("controller"), new { id = "" }, FormMethod.Get, new { id = "searchForm", @class = "form-inline well well-sm" }))
+{
+    <div class="container-fluid" style="padding-top:5px;">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="control-group">
+                    <div class="controls">
+                        <label class="control-label">开始时间</label>
+                        <input id="txtBegin_time" name="begin_time" class="iptext" style="width:150px;" value="@ViewData["begin_time"]" />
+                        <label class="control-label">结束时间</label>
+                        <input id="txtEnd_time" name="end_time" class="iptext" style="width:150px;" value="@ViewData["end_time"]" />
+                        <label class="control-label">公告类型</label> 
+                        @Html.DropDownListFor(model=>new FMHJJService.Model.FMHJJ.Flw_BiddingNotice().NoticeType, ViewBag.database as IEnumerable<SelectListItem>, new { @onchange = "$('#searchForm').submit();", @class = "iptext v_m", @style = "width:150px;" })                      
+                        <input id="btnSearch" type="submit" class="btn btn-default v_m" value="查询" />
+                        <input id="btnAdd" type="button" class="btn btn-default" value="新增" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="table-responsive">
+    <table border="1" id="userTable" style="width:100%;" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="table table-width table-bordered table-condensed table-hover">
+        <thead>
+            <tr>
+                <th style="width:40px;" class="no-sort">序号</th>
+                <th>公告标题</th>
+                <th>公告类型</th>
+                <th>发布时间</th>
+                <th>发布人</th>               
+                <th style="width:80px;">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                rowno++;
+                <tr>                    
+                    <td style="width:40px;">@rowno</td>
+                    <td>
+                        @item.Title
+                    </td>
+                    <td>@(FMHJJService.Business.FMHJJ.DictSystemBusiness.GetDictKey("公告类型", item.NoticeType.ToString()))</td>
+                    <td>@(item.PublishTime.HasValue ? item.PublishTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : string.Empty)</td>
+                    <td>@item.Publisher</td>
+                    <td style="width:80px;">
+                        @Html.HiddenFor(modelItem => item.ID)
+                        <a class="check" href="####">修改</a> |
+                        @Html.ActionLink("删除", "DeleteNotice", new { id = item.ID }, new { @onclick = "layerConfirm('确认要删除公告信息吗？', this); return false;" })                     
+                    </td>
+                </tr>
+            }            
+        </tbody>
+        <tfoot>
+            <tr>
+                <td style="text-align:left;" colspan="6">合计：@rowno</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#noticeTable').tablesort().data('tablesort');
+        clickTrAddClass();
+
+        $('#btnAdd').on("click", function () {
+            openDialog("@Url.Action("AddNotice", "NoticeManage")", "新增公告", "70%", "90%", true);
+        });
+
+        $('a.check').on("click", function () {
+            var id = $('input[type="hidden"]', $(this).parent()).val();
+            var src = "../NoticeManage/ViewNotice?id=" + id;
+            openDialog(src, "公告查看", "70%", "90%");
+        });
+
+        var errMsg = getParameter("errMsg");
+        if (errMsg.length > 0) {
+            top.layer.msg(errMsg);
+        }
+
+        var start = {
+            elem: '#txtBegin_time', istime: false, format: 'YYYY-MM-DD', min: '1970-1-1', max: '2099-12-31',
+            choose: function (dates) {
+                end.min = dates; 
+                end.start = dates;
+                $('#searchForm').submit();
+            }
+        };
+
+        var end = {
+            elem: '#txtEnd_time', istime: false, format: 'YYYY-MM-DD', min: '1970-1-1', max: '2099-12-31',
+            choose: function (dates) {
+                start.max = dates;
+                $('#searchForm').submit();
+            }
+        };
+        laydate(start);
+        laydate(end);        
+    })
+
+    function layerConfirm(msg, t) {
+        top.layer.confirm(msg, function (index) {
+            t.onclick = "";            
+            t.click();
+            top.layer.close(index);
+        });
+    }
+</script>
+
+

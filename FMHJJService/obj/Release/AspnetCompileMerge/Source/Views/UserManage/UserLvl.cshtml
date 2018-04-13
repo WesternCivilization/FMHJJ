@@ -1,0 +1,84 @@
+﻿@model IEnumerable<FMHJJService.Model.CustomModel.FMHJJ.DictSystemModel>
+
+@{
+    ViewBag.Title = "客户等级";
+    var rowno = 0;
+}
+
+<div>
+    <table id="userLvlTable" class="table" style="text-align:center;">
+        <thead>
+            <tr>
+                <th>
+                    序号
+                </th>
+                <th>
+                    客户等级
+                </th>
+                <th>
+                    操作
+                </th>                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                rowno++;
+                <tr>
+                    <td>
+                        @rowno
+                    </td>
+                    <td>
+                        @Html.EditorFor(modelItem => item.DictKey, new { htmlAttributes = new { @style = "width:100%;" } })
+                    </td>                    
+                    <td>
+                        @Html.ActionLink("更新", "Update", new { id = item.ID }, new { @onclick = "layerConfirm('确认要更新客户等级信息吗？', this); return false;" }) |
+                        @Html.ActionLink("删除", "Delete", new { id = item.ID }, new { @onclick = "layerConfirm('确认要删除客户等级信息吗？', this); return false;" })
+                    </td>
+                </tr>
+            }
+
+            <tr>
+                <td>
+                    @(++rowno)
+                </td>
+                <td>
+                    <input id="item_DictKey" type="text" style="width:100%;" />
+                </td>
+                <td>
+                    @Html.ActionLink("添加客户等级", "Create", null, new { @onclick = "layerConfirm('确认要添加客户等级信息吗？', this); return false;" })
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td style="text-align:left;" colspan="3">合计：@rowno</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        var errMsg = getParameter("errMsg");
+        if (errMsg.length > 0) {
+            top.layer.msg(errMsg);
+        }
+    });
+
+    function layerConfirm(msg, t) {
+        top.layer.confirm(msg, function (index) {
+            t.onclick = "";
+            t.href = t.href + "?dictKey=" + $('#item_DictKey', $(t).parent().prev()).val();
+            t.click();
+            top.layer.close(index);
+        });
+    }
+
+</script>
+
+
+
+
+

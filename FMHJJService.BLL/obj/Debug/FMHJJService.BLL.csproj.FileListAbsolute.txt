@@ -1,0 +1,14 @@
+E:\FMHJJ\FMHJJService.BLL\bin\Debug\FMHJJService.BLL.dll
+E:\FMHJJ\FMHJJService.BLL\bin\Debug\FMHJJService.BLL.pdb
+E:\FMHJJ\FMHJJService.BLL\bin\Debug\Autofac.dll
+E:\FMHJJ\FMHJJService.BLL\bin\Debug\FMHJJService.DAL.dll
+E:\FMHJJ\FMHJJService.BLL\bin\Debug\FMHJJService.Model.dll
+E:\FMHJJ\FMHJJService.BLL\bin\Debug\EntityFramework.dll
+E:\FMHJJ\FMHJJService.BLL\bin\Debug\FMHJJService.DAL.pdb
+E:\FMHJJ\FMHJJService.BLL\bin\Debug\FMHJJService.Model.pdb
+E:\FMHJJ\FMHJJService.BLL\bin\Debug\Autofac.xml
+E:\FMHJJ\FMHJJService.BLL\bin\Debug\EntityFramework.xml
+E:\FMHJJ\FMHJJService.BLL\bin\Debug\zh-Hans\EntityFramework.resources.dll
+E:\FMHJJ\FMHJJService.BLL\obj\Debug\FMHJJService.BLL.csprojResolveAssemblyReference.cache
+E:\FMHJJ\FMHJJService.BLL\obj\Debug\FMHJJService.BLL.dll
+E:\FMHJJ\FMHJJService.BLL\obj\Debug\FMHJJService.BLL.pdb

@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewBag.Title = "竞价查看";
+    var rowno1 = 0;
+    var rowno2 = 0;
+    var userInfo = Session["loginUser"] as FMHJJService.Model.CustomModel.FMHJJ.UserInfoCacheModel;
+}
+
+<div class="form-inline well well-sm">
+    <div class="container-fluid" style="padding-top:5px;">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="control-group">
+                    <div class="controls">
+                        &nbsp;&nbsp;<input id="btnPrint" type="button" class="btn btn-default" value="打印" />
+                        &nbsp;&nbsp;<input id="btnBack" type="button" class="btn btn-default" value="返回" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form id="formReport" action="/ExportExcel/DownloadReport" method="post" style="display:inline">
+    <input type="hidden" id="hidTable" name="hidTable" value="" />
+    <input type="hidden" id="hidFileName" name="hidFileName" value="@(ViewBag.productName + ViewBag.bidDate)" />
+</form>
+
+<div id="report">
+    <div class="table-responsive">
+        <table border="1" style="width:100%;" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="table table-width table-bordered table-condensed table-hover">
+            <caption style="background: #C7D9EF;">
+                <label class="control-label" style="float:left;margin-left:5px;">当前竞价信息</label>
+            </caption>
+            <thead>
+                <tr style="background: #C7D9EF;">
+                    <th>产品</th>
+                    <th>预估量</th>
+                    <th>本期报价下限、上限（元）</th>
+                    <th>本期加权平均成交价（元）</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@ViewBag.productName</td>
+                    <td>@ViewBag.data_BidManage.EstimateAmount</td>
+                    <td>@ViewBag.data_BidManage.CurrentPriceLower-@ViewBag.data_BidManage.CurrentPriceUpper</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table border="1" style="width:100%;" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="table table-width table-bordered table-condensed table-hover">
+            <caption>
+                <label class="control-label" style="float:left;">客户申报统计（@ViewBag.bidDate）</label>
+            </caption>
+            <thead>
+                <tr style="background: #C7D9EF;">
+                    <th>产品</th>
+                    <th>排名</th>
+                    <th>等级</th>
+                    <th>单位信息</th>
+                    <th>是否入围</th>
+                    <th>客户申报总量（吨）</th>
+                    <th>客户加权平均申报价</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in (ViewBag.flw_BiddingInfoList as List<FMHJJService.Model.FMHJJ.Flw_BiddingInfo>).GroupBy(g => g.UserID)
+                    .Select(o => new
+                    {
+                        UserID = o.Key,
+                        BiddingInfo = o.OrderByDescending(r => r.BidPrice).OrderByDescending(r => r.BidAmount).ThenBy(r => r.BidTime).First(),
+                        TotalAmount = Math.Round((decimal)o.Sum(m => m.BidAmount), 2, MidpointRounding.AwayFromZero),
+                        AvgPrice = Math.Round((decimal)(o.Sum(m => m.BidPrice * m.BidAmount) / o.Sum(m => m.BidAmount)), 2, MidpointRounding.AwayFromZero)
+                    }).ToList())
+                {
+                    rowno1++;                    
+                    <tr>
+                        <td>@ViewBag.productName</td>
+                        <td>@rowno1</td>
+                        <td>@FMHJJService.Business.FMHJJ.UserBusiness.GetUserLvl(item.UserID)</td>
+                        <td>@FMHJJService.Business.FMHJJ.UserBusiness.GetUser(item.UserID).CompanyName</td>
+                        <td>
+                            @if (item.BiddingInfo.Checked == true)
+                            {
+                                <font color="red">入围</font>
+                            }
+                            else if (item.BiddingInfo.Checked == false)
+                            {
+                                <font color="blue">出局</font>
+                            }
+                            else
+                            {
+                                @:未审核
+                            }
+                        </td>
+                        <td>@item.TotalAmount</td>
+                        <td>@item.AvgPrice</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <table border="1" style="width:100%;" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="table table-width table-bordered table-condensed table-hover">
+            <caption>
+                <label class="control-label" style="float:left;">申报详情（@ViewBag.bidDate）</label>
+            </caption>
+            <thead>
+                <tr style="background: #C7D9EF;">
+                    <th>产品</th>
+                    <th>排名</th>
+                    <th>等级</th>
+                    <th>单位信息</th>
+                    <th>申报价（元）</th>
+                    <th>申报量（吨）</th>
+                    <th>申报时间</th>
+                    <th>是否入围</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.flw_BiddingInfoList)
+                {
+                    rowno2++;
+                    <tr>
+                        <td>@ViewBag.productName</td>
+                        <td>@rowno2</td>
+                        <td>@FMHJJService.Business.FMHJJ.UserBusiness.GetUserLvl(item.UserID)</td>
+                        <td>@FMHJJService.Business.FMHJJ.UserBusiness.GetUser(item.UserID).CompanyName</td>
+                        <td>@item.BidPrice</td>
+                        <td>@item.BidAmount</td>
+                        <td>@string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.BidTime)</td>
+                        <td>
+                            @if (item.Checked == true)
+                            {
+                                <font color="red">入围</font>
+                            }
+                            else if (item.Checked == false)
+                            {
+                                <font color="blue">出局</font>
+                            }
+                            else
+                            {
+                                @:未审核
+                            }
+                        </td>                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#btnBack').on('click', function () {
+            window.location = '@Url.Action("NoticePublish", "NoticeManage")';
+        });
+
+        $('#btnPrint').on('click', function () {
+            $('#hidTable').val($('#report').html());
+            $('#formReport').submit();
+        });
+    });
+</script>
+

@@ -1,0 +1,26 @@
+﻿@model FMHJJService.Model.FMHJJ.Flw_BiddingNotice
+
+@{
+    ViewBag.Title = "竞价规则";
+}
+
+@section Styles
+{
+    <link href="~/Content/index_edit.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            background: #C7D9EF;
+            font-size: 13px;
+            line-height: 20px;
+            color: #970119;
+            font-family: Tahoma;
+        }
+    </style>
+}
+
+<div>
+    <span id="lblNoticeRule">
+        @Html.Raw(Model.PublishContent)
+    </span>
+</div>
+

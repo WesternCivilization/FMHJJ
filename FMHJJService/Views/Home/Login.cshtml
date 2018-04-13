@@ -1,0 +1,116 @@
+﻿@model FMHJJService.Model.FMHJJ.Base_UserInfo
+
+@section Styles
+{    
+    <link href="~/Content/images/User_Login.css" type=text/css rel=stylesheet>
+    <link href="~/Content/iconfont/css/iconfont.css" rel="stylesheet" />
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        var dig = {
+            Loading: function () {
+                $("#login-button").attr("disabled", "disabled");;
+            },
+            Success: function (result) {
+                if (result.Status == "y") {
+                    window.location = "" + result.ReUrl + "";
+                } else {
+                    alert(result.Msg);
+                    dig.Complete();
+                }
+            },
+            Failure: function (result) {
+                alert(result.Msg);
+                dig.Complete();
+            },
+            Complete: function () {
+                $("#login-button").attr("disabled", false);
+            },
+            ErrorMsg: function (msg) {
+                alert(msg);
+            }
+        };
+    </script>
+}
+
+<body id="userlogin_body">
+    <div class="container-fluid" style="padding:0;">
+        <div></div>
+        <div id=user_login>
+            <dl>
+                <dd id=user_top>
+                    <ul>
+                        <li class=user_top_l></li>
+                        <li class=user_top_c></li>
+                        <li class=user_top_r></li>
+                    </ul>
+                    @using (Ajax.BeginForm("UserLogin", null, new AjaxOptions()
+                                    {
+                                        HttpMethod = "Post",
+                                        OnBegin = "dig.Loading",
+                                        OnSuccess = "dig.Success",
+                                        OnFailure = "dig.Failure",
+                                        OnComplete = "dig.Complete"
+                                    }, new { @class = "form-signin form-horizontal" }))
+                    {
+                        @Html.AntiForgeryToken()
+                    <dd id=user_main>
+                        <ul>
+                            <li class=user_main_l></li>
+                            <li class=user_main_c>
+                                <div class=user_main_box>
+                                    <ul>
+                                        <li class=user_main_text>用户名： </li>
+                                        <li class=user_main_input>
+                                            @Html.TextBoxFor(model => model.UserName,
+                                                        new
+                                                        {
+                                                            @class = "TxtUserNameCssClass",
+                                                            @maxlength = 15,
+                                                            @required = "required"
+                                                        })
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li class=user_main_text>密 码： </li>
+                                        <li class=user_main_input>
+                                            @Html.PasswordFor(model => model.Password,
+                                                        new
+                                                        {
+                                                            @class = "TxtPasswordCssClass",
+                                                            @maxlength = 12,
+                                                            @required = "required"
+                                                        })
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li class=user_main_text>
+                                            <label>
+                                                @Html.CheckBoxFor(model => model.REMEMBER_ME, new { @checked = "checked", @style = "margin:0px;" })
+                                            </label>记住我
+                                        </li>                                                                                                 
+                                    </ul>                                    
+                                </div>
+                            </li>
+                            <li class=user_main_r>
+                                <input class="IbtnEnterCssClass" id="login-button"
+                                       style="BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px"
+                                       onclick='javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions("IbtnEnter", "", true, "", "", false, false))'
+                                       type="image" src="~/Content/images/user_botton.gif" name="IbtnEnter" />
+                            </li>
+                        </ul>
+                    </dd>
+                    }
+                </dl>                
+                <div style="float:right;position:relative;top:-20px;right:15px;">
+                    <a href="/UserManage/UserRegister">
+                        @*<i class="icon-zhuce iconfont"></i>*@
+                        客户注册
+                    </a>
+                    &nbsp;&nbsp;武汉市踏弛智能科技有限公司
+                </div>
+            </div>
+    </div>
+</body>

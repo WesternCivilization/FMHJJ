@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1E38EC5A-0A89-4D9E-9CDF-6F79C580B6A1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FMHJJService.Model</RootNamespace>
+    <AssemblyName>FMHJJService.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net40\EntityFramework.dll</HintPath>
+      <Aliases>global</Aliases>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\ResponseModel.cs" />
+    <Compile Include="Base\ResponseModelFactory.cs" />
+    <Compile Include="CustomModel\FMHJJ\HistoryBiddingInfoModel.cs" />
+    <Compile Include="CustomModel\FMHJJ\FinalBiddingInfoModel.cs" />
+    <Compile Include="CustomModel\FMHJJ\BiddingNoticeModel.cs" />
+    <Compile Include="CustomModel\FMHJJ\DictFunctionsModel.cs" />
+    <Compile Include="CustomModel\FMHJJ\DataParameterModel.cs" />
+    <Compile Include="CustomModel\FMHJJ\DictSystemModel.cs" />
+    <Compile Include="CustomModel\FMHJJ\FMHJJCustomEntities.cs" />
+    <Compile Include="CustomModel\FMHJJ\ProductInfoModel.cs" />
+    <Compile Include="CustomModel\FMHJJ\UserInfoCacheModel.cs" />
+    <Compile Include="FMHJJ\Base_ProductInfo.cs">
+      <DependentUpon>FMHJJDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FMHJJ\Base_ProductInfo_Detail.cs">
+      <DependentUpon>FMHJJDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FMHJJ\Base_UserInfo.cs">
+      <DependentUpon>FMHJJDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FMHJJ\Base_UserInfo_Grant.cs">
+      <DependentUpon>FMHJJDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FMHJJ\Data_BidManage.cs">
+      <DependentUpon>FMHJJDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FMHJJ\Data_Parameters.cs">
+      <DependentUpon>FMHJJDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FMHJJ\Data_SmsManage.cs">
+      <DependentUpon>FMHJJDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FMHJJ\Dict_FunctionMenu.cs">
+      <DependentUpon>FMHJJDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FMHJJ\Dict_System.cs">
+      <DependentUpon>FMHJJDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FMHJJ\Flw_BiddingInfo.cs">
+      <DependentUpon>FMHJJDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FMHJJ\Flw_BiddingNotice.cs">
+      <DependentUpon>FMHJJDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FMHJJ\FMHJJDBEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FMHJJDBEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FMHJJ\FMHJJDBEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FMHJJDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FMHJJ\FMHJJDBEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FMHJJDBEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="FMHJJ\FMHJJDBEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FMHJJDBEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="FMHJJ\FMHJJDBEntities.edmx.diagram">
+      <DependentUpon>FMHJJDBEntities.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FMHJJ\FMHJJDBEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FMHJJDBEntities.edmx</DependentUpon>
+      <LastGenOutput>FMHJJDBEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="FMHJJ\FMHJJDBEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FMHJJDBEntities.edmx</DependentUpon>
+      <LastGenOutput>FMHJJDBEntities.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FMHJJService.Common\FMHJJService.Common.csproj">
+      <Project>{adce73d3-04ff-4d98-846f-c8026a3b6396}</Project>
+      <Name>FMHJJService.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
